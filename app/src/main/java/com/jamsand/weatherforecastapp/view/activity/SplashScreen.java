@@ -1,6 +1,5 @@
-package com.jamsand.weatherforecastapp;
+package com.jamsand.weatherforecastapp.view.activity;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -18,6 +17,8 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.Toast;
+
+import com.jamsand.weatherforecastapp.R;
 
 public class SplashScreen extends AppCompatActivity implements LocationListener {
     LocationManager locationManager;

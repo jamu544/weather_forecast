@@ -8,7 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 //import com.jamsand.weatherforecastapp.Manifest;
-//import com.jamsand.weatherforecastapp.SplashScreen;
+//import com.jamsand.weatherforecastapp.view.activity.SplashScreen;
 import com.jamsand.weatherforecastapp.WeatherApplication;
 
 //import androidx.core.app.ActivityCompat;
