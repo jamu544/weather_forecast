@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        s
+
         activityMainBinding = DataBindingUtil.setContentView(this,R.layout.activity_main);
 
         context = this;
