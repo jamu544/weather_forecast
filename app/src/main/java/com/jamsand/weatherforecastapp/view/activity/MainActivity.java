@@ -12,15 +12,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.jamsand.weatherforecastapp.R;
-import com.jamsand.weatherforecastapp.WeatherApplication;
 import com.jamsand.weatherforecastapp.databinding.ActivityMainBinding;
 import com.jamsand.weatherforecastapp.model.WeatherResponse;
-import com.jamsand.weatherforecastapp.network.WeatherService;
+import com.jamsand.weatherforecastapp.network.APIInterface;
 import com.jamsand.weatherforecastapp.utils.Constants;
 
 public class MainActivity extends AppCompatActivity {
@@ -59,8 +56,8 @@ public class MainActivity extends AppCompatActivity {
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        WeatherService service = retrofit.create(WeatherService.class);
-        Call<WeatherResponse> call = service.getCurrentWeatherData(latitude, longitude, Constants.API_KEY);
+        APIInterface client = retrofit.create(APIInterface.class);
+        Call<WeatherResponse> call = client.getCurrentWeatherData(latitude, longitude, Constants.API_KEY);
         call.enqueue(new Callback<WeatherResponse>() {
             @Override
             public void onResponse(@NonNull Call<WeatherResponse> call, @NonNull Response<WeatherResponse> response) {
