@@ -29,6 +29,7 @@ public class SplashScreen extends AppCompatActivity implements LocationListener 
     private int mInterval = 3000; // 3 seconds by default, can be changed later
     private Handler mHandler;
     AlertDialog.Builder dailog;
+    AlertDialog.Builder alertDialog2;
 
 
     //testing git
@@ -41,32 +42,33 @@ public class SplashScreen extends AppCompatActivity implements LocationListener 
 
 
         if(checkInternetConnectivity()) {
+//
+//            //Alert Dialog
+//             alertDialog2 = new AlertDialog.Builder(
+//                    SplashScreen.this);
+//
+//            // Setting Dialog Title
+//            alertDialog2.setTitle("Notification");
+//
+//            // Setting Dialog Message
+//            String string1 = "Give it seconds for your coordinates to update";
+//
+//            alertDialog2.setMessage(string1);
+//
+//            // Setting Icon to Dialog
+//            alertDialog2.setIcon(R.drawable.weather_app);
+//
+//            // Setting Positive "Yes" Btn
+//            alertDialog2.setPositiveButton("Continue",
+//                    new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int which) {
+//
+//                        }
+//                    });
+//
+//            // Showing Alert Dialog
+//            alertDialog2.show();
 
-            //Alert Dialog
-            AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(
-                    SplashScreen.this);
-
-            // Setting Dialog Title
-            alertDialog2.setTitle("Notification");
-
-            // Setting Dialog Message
-            String string1 = "Give it seconds for your coordinates to update";
-
-            alertDialog2.setMessage(string1);
-
-            // Setting Icon to Dialog
-            alertDialog2.setIcon(R.drawable.weather_app);
-
-            // Setting Positive "Yes" Btn
-            alertDialog2.setPositiveButton("Continue",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-
-                        }
-                    });
-
-            // Showing Alert Dialog
-            alertDialog2.show();
 
             Handler handler2 = new Handler();
             handler2.postDelayed(new Runnable() {
@@ -176,6 +178,7 @@ public class SplashScreen extends AppCompatActivity implements LocationListener 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        alertDialog2 = null;
         stopRepeatingTask();
     }
 
