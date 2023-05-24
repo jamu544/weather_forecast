@@ -2,6 +2,7 @@ package com.jamsand.weatherforecastapp.view.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.jamsand.weatherforecastapp.R;
 import com.jamsand.weatherforecastapp.WeatherApplication;
+import com.jamsand.weatherforecastapp.databinding.ActivityMainBinding;
 import com.jamsand.weatherforecastapp.model.WeatherResponse;
 import com.jamsand.weatherforecastapp.network.WeatherService;
 import com.jamsand.weatherforecastapp.utils.Constants;
@@ -26,41 +28,29 @@ public class MainActivity extends AppCompatActivity {
 
     private Context context;
     String latitude, longitude;
-    //api.openweathermap.org/data/2.5/find?q=London&units=metric
 
-    public TextView locationTextView;
-    public TextView weatherDescription;
-    public TextView degressTextView;
-    public ImageView weatherIconImageView;
     public static final String  TAG = "MainActivity";
 
 
+    private ActivityMainBinding activityMainBinding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+        s
+        activityMainBinding = DataBindingUtil.setContentView(this,R.layout.activity_main);
 
         context = this;
+        //setting up app icon
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.drawable.weather_app);
 
-
-        locationTextView = (TextView) findViewById(R.id.locationTextView);
-        weatherDescription = (TextView) findViewById(R.id.weatherConditionTextView);
-        degressTextView = (TextView) findViewById(R.id.temperatureTextView);
-        weatherIconImageView = (ImageView) findViewById(R.id.weather_icon_ImageView);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             latitude = extras.getString("latitude" );
             longitude = extras.getString( "longitude" );
         }
-
-
         getWeatherConditionsForCurrentLocation();
-  //      getWeatherConditionsForCurrentLocation2();
-
     }
 
     // get response from the server
@@ -80,14 +70,13 @@ public class MainActivity extends AppCompatActivity {
 
                     String icon = weatherResponse.weather.get(0).icon;
 
-                    locationTextView.setText(weatherResponse.name+","+weatherResponse.sys.country);
-                    weatherDescription.setText(weatherResponse.weather.get(0).description+"");
-                    degressTextView.setText("" + Math.round((weatherResponse.main.temp - 275.15))+"\u00B0");
+                    activityMainBinding.locationTextView.setText(weatherResponse.name+","+weatherResponse.sys.country);
+                    activityMainBinding.weatherConditionTextView.setText(weatherResponse.weather.get(0).description+"");
+                    activityMainBinding.temperatureTextView.setText("" + Math.round((weatherResponse.main.temp - 275.15))+"\u00B0");
 
-                    Glide.with(context).load("http://openweathermap.org/img/w/" +icon+".png").into(weatherIconImageView);
+                    Glide.with(context).load("http://openweathermap.org/img/w/" +icon+".png").into(activityMainBinding.weatherIconImageView);
                 }
             }
-
             @Override
             public void onFailure(@NonNull Call<WeatherResponse> call, @NonNull Throwable t) {
                 Log.e(TAG,call.toString()+"   ?????");
