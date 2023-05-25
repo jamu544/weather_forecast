@@ -19,17 +19,18 @@ import android.os.Handler;
 import android.widget.Toast;
 
 import com.jamsand.weatherforecastapp.R;
+import com.jamsand.weatherforecastapp.utils.Constants;
 
 public class SplashScreen extends AppCompatActivity implements LocationListener {
-    LocationManager locationManager;
-    String locationText = "";
-    String locationLatitude = "";
-    String locationLongitude = "";
+  private  LocationManager locationManager;
+  private  String locationText = "";
+  private  String locationLatitude = "";
+  private  String locationLongitude = "";
 
     private int mInterval = 3000; // 3 seconds by default, can be changed later
     private Handler mHandler;
-    AlertDialog.Builder dailog;
-    AlertDialog.Builder alertDialog2;
+    private AlertDialog.Builder dailog;
+    private AlertDialog.Builder alertDialog2;
 
 
     //testing git
@@ -129,8 +130,8 @@ public class SplashScreen extends AppCompatActivity implements LocationListener 
 
                     Intent i = new Intent(SplashScreen.this, MainActivity.class);
 
-                    i.putExtra("latitude", locationLatitude);
-                    i.putExtra("longitude", locationLongitude);
+                    i.putExtra(Constants.LATITUDE, locationLatitude);
+                    i.putExtra(Constants.LONGITUDE, locationLongitude);
                     startActivity(i);
 
                     // close this activity

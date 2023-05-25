@@ -44,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            latitude = extras.getString("latitude" );
-            longitude = extras.getString( "longitude" );
+            latitude = extras.getString(Constants.LATITUDE );
+            longitude = extras.getString( Constants.LONGITUDE );
         }
         getWeatherConditionsForCurrentLocation();
     }
