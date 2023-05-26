@@ -7,4 +7,57 @@
     android:background="@drawable/bg_gradient"
     tools:context=".view.activity.SplashScreen">
 
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="239dp"
+        android:layout_height="102dp"
+        android:layout_marginTop="208dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.598"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/weather_app" />
+
+    <TextView
+        android:id="@+id/title_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="52dp"
+        android:layout_marginTop="28dp"
+        android:gravity="center"
+        android:text="Weather App is unavailable"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.589"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+    <TextView
+        android:id="@+id/body_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="52dp"
+        android:layout_marginTop="28dp"
+        android:fontFamily="@font/source_sans_pro"
+        android:gravity="center"
+        android:text="Weather App requires permission to access your current location, you can turn this function on in settings"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.58"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_textview" />
+
+    <Button
+        android:id="@+id/settings_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:background="#0000"
+        android:text="GO TO SETTINGS"
+        android:textColor="#e16b14"
+        android:textColorLink="#e16b14"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/body_textview" />
 </androidx.constraintlayout.widget.ConstraintLayout>
