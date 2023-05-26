@@ -17,17 +17,21 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.jamsand.weatherforecastapp.R;
 import com.jamsand.weatherforecastapp.WeatherApplication;
 import com.jamsand.weatherforecastapp.utils.Constants;
+import com.jamsand.weatherforecastapp.utils.Utilities;
+
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
 
-public class SplashScreen extends AppCompatActivity implements LocationListener {
+public class SplashScreen extends AppCompatActivity implements LocationListener,View.OnClickListener {
 
     private Context context;
   private  LocationManager locationManager;
@@ -44,6 +48,7 @@ public class SplashScreen extends AppCompatActivity implements LocationListener 
 
     //testing git
 
+    private Button settingsButton;
     public static String[] locationPermissonRequest = new String[]{"android.permission.FINE_LOCATION"};
 
     public static final int PERMISSION_REQUEST_CODE = 200;
@@ -53,6 +58,8 @@ public class SplashScreen extends AppCompatActivity implements LocationListener 
         setContentView(R.layout.activity_splash_screen);
         context = WeatherApplication.getInstance();
 
+        settingsButton = (Button) findViewById(R.id.settings_button);
+        settingsButton.setOnClickListener(this);
 
 
         if(checkInternetConnectivity()) {
@@ -289,8 +296,21 @@ public class SplashScreen extends AppCompatActivity implements LocationListener 
                 .show();
     }
 
-    public void settingsButon(View view) {
-        view =view;
-      //  finish();
+    public  void openSettingsFromDevice(){
+
+        Intent intent = new Intent(Settings.ACTION_SETTINGS);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.settings_button:
+                openSettingsFromDevice();
+                break;
+        }
     }
 }

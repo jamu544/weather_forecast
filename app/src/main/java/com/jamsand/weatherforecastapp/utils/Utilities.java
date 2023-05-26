@@ -3,9 +3,11 @@ package com.jamsand.weatherforecastapp.utils;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.provider.Settings;
 
 //import com.jamsand.weatherforecastapp.Manifest;
 //import com.jamsand.weatherforecastapp.view.activity.SplashScreen;
@@ -67,5 +69,13 @@ public class Utilities {
 //
     }
 
+    //open settings and enable location permissions
+    public  static void openSettingsFromDevice(Context context){
+
+        Intent intent = new Intent(Settings.ACTION_SETTINGS);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+
+    }
 
 }
