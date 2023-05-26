@@ -37,10 +37,6 @@ public class MainActivity extends AppCompatActivity {
         activityMainBinding = DataBindingUtil.setContentView(this,R.layout.activity_main);
 
         context = this;
-        //setting up app icon
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.weather_app);
-
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {

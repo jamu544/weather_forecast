@@ -214,7 +214,28 @@ public class SplashScreen extends AppCompatActivity implements LocationListener 
         alert.show();
     }
 
-
+    // get required permissions and runtime and scan
+//    private void checkPermissionsAndStartScan() {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            Toast.makeText(MainActivity.this, "version> = marshmallow", Toast.LENGTH_SHORT).show();
+//            if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION)
+//                    != PackageManager.PERMISSION_GRANTED) {
+//                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+//                        MY_PERMISSIONS_ACCESS_COARSE_LOCATION);
+//            } else {
+//                wifiManager.startScan();
+//            }
+//        } else {
+//
+//            wifiManager.startScan();
+//        }
+//    }
+//
+//    private boolean isNetworkConnected() {
+//        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+//
+//        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
+//    }
 
 
 }
