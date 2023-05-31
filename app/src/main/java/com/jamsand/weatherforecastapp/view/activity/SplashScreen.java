@@ -296,6 +296,7 @@ public class SplashScreen extends AppCompatActivity implements LocationListener,
                 .show();
     }
 
+    //open settings screen from device
     public  void openSettingsFromDevice(){
 
         Intent intent = new Intent(Settings.ACTION_SETTINGS);
