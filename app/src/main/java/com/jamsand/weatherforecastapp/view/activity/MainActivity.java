@@ -108,9 +108,7 @@ public class MainActivity extends AppCompatActivity {
 
                 WeatherForecastResult weatherResponse = response.body();
                 displayForecastWeather(weatherResponse);
-                System.out.println("Date :"+ weatherResponse.list.get(0).dt);
-                System.out.println("Description  :"+ weatherResponse.list.get(0).dt);
-                System.out.println("Image  :"+ weatherResponse.list.get(0).wind);
+
            }
 
             @Override
@@ -123,9 +121,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void displayForecastWeather(WeatherForecastResult weatherForecastResult){
-        System.out.println("City :"+ weatherForecastResult.city);
-        System.out.println("City :"+ weatherForecastResult.city);
-
         FiveDayWeatherForecastAdapter adapter = new FiveDayWeatherForecastAdapter(weatherForecastResult,context);
         activityMainBinding.setMyAdapter(adapter);
     }

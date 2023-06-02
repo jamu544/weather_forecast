@@ -13,6 +13,9 @@ import android.provider.Settings;
 //import com.jamsand.weatherforecastapp.view.activity.SplashScreen;
 import com.jamsand.weatherforecastapp.WeatherApplication;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 //import androidx.core.app.ActivityCompat;
 //import androidx.core.content.ContextCompat;
 
@@ -75,6 +78,14 @@ public class Utilities {
         Intent intent = new Intent(Settings.ACTION_SETTINGS);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
+
+    }
+
+    public static String convertUnixToDate(long d){
+        Date date = new Date(d*1000L);
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm dd EEE MMM yyyy");
+        String formatted = sdf.format(date);
+        return formatted;
 
     }
 
