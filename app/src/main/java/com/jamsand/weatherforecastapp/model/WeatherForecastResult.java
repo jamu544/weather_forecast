@@ -15,6 +15,9 @@ public class WeatherForecastResult {
    // https://api.openweathermap.org/data/2.5/forecast?q=mumbai&APPID=482cf2ce25f8841f70e5c870e59183a6
     //In MVVM, the data request from Repository => API service => ViewModel => Activity/Fragment.
 
+    //to implement the api below
+ //   https://pro.openweathermap.org/data/2.5/forecast/hourly?lat={lat}&lon={lon}&appid={API key}
+
 
     public City city;
     @SerializedName("list")

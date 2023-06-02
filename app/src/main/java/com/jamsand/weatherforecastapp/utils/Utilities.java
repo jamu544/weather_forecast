@@ -81,9 +81,10 @@ public class Utilities {
 
     }
 
+    // convert date from server and convert to day of the week
     public static String convertUnixToDate(long d){
         Date date = new Date(d*1000L);
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm dd EEE MMM yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat(" EEEE");
         String formatted = sdf.format(date);
         return formatted;
 

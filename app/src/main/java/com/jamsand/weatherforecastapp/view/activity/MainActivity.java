@@ -96,12 +96,12 @@ public class MainActivity extends AppCompatActivity {
     private void getWeatherForecast(){
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.BASE_URL)
+                .baseUrl(Constants.BASE_URL2)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         APIInterface client = retrofit.create(APIInterface.class);
-        Call<WeatherForecastResult> call = client.getWeatherForecast(city,Constants.API_KEY);
+        Call<WeatherForecastResult> call = client.getWeatherForecast(latitude, longitude, Constants.API_KEY);
         call.enqueue(new Callback<WeatherForecastResult>() {
             @Override
             public void onResponse(Call<WeatherForecastResult> call, Response<WeatherForecastResult> response) {
