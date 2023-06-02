@@ -15,10 +15,14 @@ import android.util.Log;
 
 import com.bumptech.glide.Glide;
 import com.jamsand.weatherforecastapp.R;
+import com.jamsand.weatherforecastapp.adapters.FiveDayWeatherForecastAdapter;
 import com.jamsand.weatherforecastapp.databinding.ActivityMainBinding;
+import com.jamsand.weatherforecastapp.model.WeatherForecastResult;
 import com.jamsand.weatherforecastapp.model.WeatherResponse;
 import com.jamsand.weatherforecastapp.network.APIInterface;
 import com.jamsand.weatherforecastapp.utils.Constants;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,11 +34,18 @@ public class MainActivity extends AppCompatActivity {
 
 
     private ActivityMainBinding activityMainBinding;
+
+    //testing 5day weather
+    private String fiveDay = "https://api.openweathermap.org/data/2.5/forecast?q=mumbai&APPID=482cf2ce25f8841f70e5c870e59183a6";
+    private String city = "mumbai";
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        activityMainBinding = DataBindingUtil.setContentView(this,R.layout.activity_main);
+       activityMainBinding = DataBindingUtil.setContentView(this,R.layout.activity_main);
 
         context = this;
 
@@ -44,9 +55,11 @@ public class MainActivity extends AppCompatActivity {
             longitude = extras.getString( Constants.LONGITUDE );
         }
         getWeatherConditionsForCurrentLocation();
+        getWeatherForecast();
     }
 
     // get response from the server
+    //change later to use singleton
     public void getWeatherConditionsForCurrentLocation(){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
@@ -76,6 +89,45 @@ public class MainActivity extends AppCompatActivity {
                 Log.e(TAG,t.toString());
             }
         });
+    }
+
+    // test the new written Retrofit client from youtube.
+
+    private void getWeatherForecast(){
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constants.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        APIInterface client = retrofit.create(APIInterface.class);
+        Call<WeatherForecastResult> call = client.getWeatherForecast(city,Constants.API_KEY);
+        call.enqueue(new Callback<WeatherForecastResult>() {
+            @Override
+            public void onResponse(Call<WeatherForecastResult> call, Response<WeatherForecastResult> response) {
+
+                WeatherForecastResult weatherResponse = response.body();
+                displayForecastWeather(weatherResponse);
+                System.out.println("Date :"+ weatherResponse.list.get(0).dt);
+                System.out.println("Description  :"+ weatherResponse.list.get(0).dt);
+                System.out.println("Image  :"+ weatherResponse.list.get(0).wind);
+           }
+
+            @Override
+            public void onFailure(Call<WeatherForecastResult> call, Throwable t) {
+                Log.e("Weather forecst",call.toString()+"   ?????");
+                Log.e("Weather forecst",t.toString());
+
+            }
+        });
+    }
+
+    private void displayForecastWeather(WeatherForecastResult weatherForecastResult){
+        System.out.println("City :"+ weatherForecastResult.city);
+        System.out.println("City :"+ weatherForecastResult.city);
+
+        FiveDayWeatherForecastAdapter adapter = new FiveDayWeatherForecastAdapter(weatherForecastResult,context);
+        activityMainBinding.setMyAdapter(adapter);
     }
 
 }

@@ -5,11 +5,13 @@
     <data>
         <variable
             name="weatherforecast"
-            type="com.jamsand.weatherforecastapp.model.AdapterTestAdapter" />
+            type="com.jamsand.weatherforecastapp.model.WeatherForecastResult" />
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+
+    >
 
     <ImageView
         android:id="@+id/weatherThumbnail"
@@ -23,7 +25,7 @@
         app:srcCompat="@drawable/weather_app" />
 
     <TextView
-        android:id="@+id/dateTextView"
+        android:id="@+id/txt_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -37,7 +39,7 @@
         app:layout_constraintTop_toBottomOf="@+id/weatherThumbnail" />
 
     <TextView
-        android:id="@+id/weatherConditionAdapter"
+        android:id="@+id/txt_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
@@ -48,7 +50,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.863"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dateTextView"
+        app:layout_constraintTop_toBottomOf="@+id/txt_date"
         app:layout_constraintVertical_bias="0.0" />
 
     <androidx.constraintlayout.widget.Guideline

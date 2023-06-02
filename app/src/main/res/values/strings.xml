@@ -3,4 +3,5 @@
     <string name="location">Location</string>
     <string name="default_temperatue">16</string>
     <string name="default_weather_description">Partly cloudly 22 / 16</string>
+    <string name="_5_dayforecast">5-DAYFORECAST</string>
 </resources>

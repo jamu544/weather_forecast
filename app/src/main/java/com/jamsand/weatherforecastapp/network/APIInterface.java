@@ -1,5 +1,6 @@
 package com.jamsand.weatherforecastapp.network;
 
+import com.jamsand.weatherforecastapp.model.WeatherForecastResult;
 import com.jamsand.weatherforecastapp.model.WeatherResponse;
 
 import retrofit2.Call;
@@ -12,4 +13,11 @@ public interface APIInterface {
             @Query("lat") String lat,
             @Query("lon") String lon,
             @Query("APPID") String app_id);
+    @GET("data/2.5/forecast?")
+    Call<WeatherForecastResult> getWeatherForecast(
+            @Query("q") String cityName,
+            @Query("APPID") String app_id
+    );
+    //rename widget ids with underscores
+
 }

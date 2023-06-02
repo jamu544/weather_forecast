@@ -3,10 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="myAdapter"
+            type="com.jamsand.weatherforecastapp.adapters.FiveDayWeatherForecastAdapter" />
+    </data>
+
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary"
+    android:background="@drawable/bg_gradient"
     tools:context=".view.activity.MainActivity">
 
     <TextView
@@ -59,16 +66,22 @@
         app:layout_constraintTop_toBottomOf="@+id/temperatureTextView" />
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/weatherConditionTextView">
+        app:layout_constraintTop_toBottomOf="@+id/weatherConditionTextView"
+        android:src="@drawable/cardview_background"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#154F9E"
             android:orientation="vertical">
 
             <TextView
@@ -76,8 +89,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/source_sans_pro_semibold"
-                android:layout_marginLeft="20dp"
-                android:text="5-DAYFORECAST"
+                android:layout_marginStart="20dp"
+                android:text="@string/_5_dayforecast"
                 android:layout_marginBottom="15dp"
                 android:textColor="@color/white" />
             <view
@@ -85,15 +98,21 @@
                 class="com.google.android.material.divider.MaterialDivider"
                 android:layout_width="match_parent"
                 app:dividerColor="@color/white"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
                 android:layout_height="2dp"
                  />
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_marginLeft="20dp"
+                android:id="@+id/recycler_forecast"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:layout_marginTop="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_weight="1" />
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:adapter="@{myAdapter}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                />
 
 
         </LinearLayout>
