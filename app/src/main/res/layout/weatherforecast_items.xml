@@ -7,57 +7,42 @@
             name="weatherforecast"
             type="com.jamsand.weatherforecastapp.model.WeatherForecastResult" />
     </data>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:orientation="horizontal"
     >
 
     <ImageView
         android:id="@+id/weatherThumbnail"
         android:layout_width="44dp"
         android:layout_height="44dp"
-        android:layout_marginTop="52dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+
+        android:layout_margin="5dp"
         app:srcCompat="@drawable/weather_app" />
 
     <TextView
         android:id="@+id/txt_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+
         android:fontFamily="@font/source_sans_pro"
         android:text="Today"
+        android:layout_margin="10dp"
         android:textColor="@color/white"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.313"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/weatherThumbnail" />
+       />
 
     <TextView
         android:id="@+id/txt_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:textSize="16sp"
         android:fontFamily="@font/source_sans_pro"
         android:text="Partly Cloudly"
+        android:layout_margin="10dp"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.863"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_date"
-        app:layout_constraintVertical_bias="0.0" />
+        />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="198dp" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
 </layout>

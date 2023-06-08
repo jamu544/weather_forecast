@@ -31,13 +31,14 @@ public class MainActivity extends AppCompatActivity {
     String latitude, longitude;
 
     public static final String  TAG = "MainActivity";
-
+    String unit = "metric";
 
     private ActivityMainBinding activityMainBinding;
 
-    //testing 5day weather
+    //testing 5day weather (try uniits
     private String fiveDay = "https://api.openweathermap.org/data/2.5/forecast?q=mumbai&APPID=482cf2ce25f8841f70e5c870e59183a6";
     private String city = "mumbai";
+
 
 
 
@@ -96,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
     private void getWeatherForecast(){
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.BASE_URL2)
+                .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -113,8 +114,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<WeatherForecastResult> call, Throwable t) {
-                Log.e("Weather forecst",call.toString()+"   ?????");
-                Log.e("Weather forecst",t.toString());
+                Log.e("Error",call.toString()+"   ?????");
+
 
             }
         });

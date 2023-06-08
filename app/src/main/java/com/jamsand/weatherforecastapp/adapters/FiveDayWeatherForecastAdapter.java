@@ -9,8 +9,10 @@ import com.jamsand.weatherforecastapp.BR;
 import com.jamsand.weatherforecastapp.R;
 import com.jamsand.weatherforecastapp.databinding.WeatherforecastItemsBinding;
 import com.jamsand.weatherforecastapp.model.WeatherForecastResult;
+import com.jamsand.weatherforecastapp.utils.Constants;
 import com.jamsand.weatherforecastapp.utils.Utilities;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
@@ -40,13 +42,44 @@ public class FiveDayWeatherForecastAdapter extends RecyclerView.Adapter<FiveDayW
     @Override
     public void onBindViewHolder(@NonNull WeatherForecastHolder holder, int position) {
         WeatherForecastResult weatherForecast = weatherForecastResult;
-        holder.weatherforecastItemsBinding.txtDate.setText(Utilities.convertUnixToDate(weatherForecast.list.get(position).dt));
-        holder.weatherforecastItemsBinding.txtDescription.setText(weatherForecast.list
-                .get(position).weather.get(0).description+" temperature");
 
-        Glide.with(context).load("http://openweathermap.org/img/w/" +
-                weatherForecast.list.get(position).weather.get(0).icon+".png")
-                .into(holder.weatherforecastItemsBinding.weatherThumbnail);
+        // get last time of each day
+        int sizeOfList =weatherForecast.list.size();
+        //create another list to compare with original
+        ArrayList<String> days = new ArrayList<>();
+        for (int i = 0; i < sizeOfList; i++) {
+            //   console.log(weatherForecast.list[i].dt_txt);
+            try {
+                if (Utilities.convertUnixToTime(weatherForecast.list.get(position).dt_txt).equals(Constants.AFTERNOON_TIME)){
+
+                    days.add(Utilities.convertUnixToDate(weatherForecast.list.get(i).dt));
+
+                }
+
+                else {
+
+                    System.out.println(Constants.AFTERNOON_TIME+" === "+Utilities.convertUnixToTime(weatherForecast.list.get(position).dt_txt));
+                    days.add(Utilities.convertUnixToDate(weatherForecast.list.get(i).dt));
+
+                }
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
+        for(int i = 0; i < days.size()-1; i++){
+            System.out.println("Days of the week "+ days.get(i));
+        }
+
+
+            holder.weatherforecastItemsBinding.txtDate.setText(""+days.get(position).toString());
+            holder.weatherforecastItemsBinding.txtDescription.setText(weatherForecast.list
+                    .get(position).weather.get(0).description + " temperature");
+
+            Glide.with(context).load("http://openweathermap.org/img/w/" +
+                            weatherForecast.list.get(position).weather.get(0).icon + ".png")
+                    .into(holder.weatherforecastItemsBinding.weatherThumbnail);
 
         holder.bind(weatherForecast);
 

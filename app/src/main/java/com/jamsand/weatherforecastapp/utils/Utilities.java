@@ -8,11 +8,13 @@ import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.provider.Settings;
+import android.util.Log;
 
 //import com.jamsand.weatherforecastapp.Manifest;
 //import com.jamsand.weatherforecastapp.view.activity.SplashScreen;
 import com.jamsand.weatherforecastapp.WeatherApplication;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -89,5 +91,30 @@ public class Utilities {
         return formatted;
 
     }
+    public static String convertUnixToTime(String inputDate) throws ParseException {
+        Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(inputDate);
+        return new SimpleDateFormat("HH:mm:ss").format(date);
+    }
 
+    // try this time {
+    private boolean checktimings(String time, String endtime) {
+
+        String pattern = "HH:mm";
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+
+        try {
+            Date date1 = sdf.parse(time);
+            Date date2 = sdf.parse(endtime);
+
+            if(date1.before(date2)) {
+                return true;
+            } else {
+
+                return false;
+            }
+        } catch (ParseException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

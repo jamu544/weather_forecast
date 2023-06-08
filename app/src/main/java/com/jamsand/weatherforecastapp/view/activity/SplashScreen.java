@@ -3,6 +3,7 @@ package com.jamsand.weatherforecastapp.view.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.databinding.DataBindingUtil;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -23,12 +24,12 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
+
 import com.jamsand.weatherforecastapp.R;
 import com.jamsand.weatherforecastapp.WeatherApplication;
+import com.jamsand.weatherforecastapp.databinding.ActivitySplashScreenBinding;
 import com.jamsand.weatherforecastapp.utils.Constants;
-import com.jamsand.weatherforecastapp.utils.Utilities;
-
-import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+import android.Manifest;
 
 
 public class SplashScreen extends AppCompatActivity implements LocationListener,View.OnClickListener {
@@ -52,10 +53,12 @@ public class SplashScreen extends AppCompatActivity implements LocationListener,
     public static String[] locationPermissonRequest = new String[]{"android.permission.FINE_LOCATION"};
 
     public static final int PERMISSION_REQUEST_CODE = 200;
+    private ActivitySplashScreenBinding splashScreenBinding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash_screen);
+     //   setContentView(R.layout.activity_splash_screen);
+        splashScreenBinding = DataBindingUtil.setContentView(this,R.layout.activity_splash_screen);
         context = WeatherApplication.getInstance();
 
         settingsButton = (Button) findViewById(R.id.settings_button);
@@ -63,50 +66,20 @@ public class SplashScreen extends AppCompatActivity implements LocationListener,
 
 
         if(checkInternetConnectivity()) {
-//
-//            //Alert Dialog
-//             alertDialog2 = new AlertDialog.Builder(
-//                    SplashScreen.this);
-//
-//            // Setting Dialog Title
-//            alertDialog2.setTitle("Notification");
-//
-//            // Setting Dialog Message
-//            String string1 = "Give it seconds for your coordinates to update";
-//
-//            alertDialog2.setMessage(string1);
-//
-//            // Setting Icon to Dialog
-//            alertDialog2.setIcon(R.drawable.weather_app);
-//
-//            // Setting Positive "Yes" Btn
-//            alertDialog2.setPositiveButton("Continue",
-//                    new DialogInterface.OnClickListener() {
-//                        public void onClick(DialogInterface dialog, int which) {
-//
-//                        }
-//                    });
-//
-//            // Showing Alert Dialog
-//            alertDialog2.show();
+            if (ContextCompat.checkSelfPermission(SplashScreen.this,
+                    Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+                if (ActivityCompat.shouldShowRequestPermissionRationale(SplashScreen.this,
+                        Manifest.permission.ACCESS_FINE_LOCATION)){
+                    ActivityCompat.requestPermissions(SplashScreen.this,
+                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+                }else{
+                    ActivityCompat.requestPermissions(SplashScreen.this,
+                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+                }
+            }
 
 
 
-
-            //Permissions for getting Locations etc.
-
-//            if (ContextCompat.checkSelfPermission(getApplicationContext(),
-//                    android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-//                    ActivityCompat.checkSelfPermission(getApplicationContext(),
-//                            android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//
-//                ActivityCompat.requestPermissions(this,
-//                        new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION,
-//                                android.Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
-//
-//            }
-            if (checkPermission()){
-                requestPermission();
                 Handler handler2 = new Handler();
                 handler2.postDelayed(new Runnable() {
                     public void run() {
@@ -115,9 +88,10 @@ public class SplashScreen extends AppCompatActivity implements LocationListener,
                     }
                 }, 5000);   //5 seconds
 
-            }
+
         } else {
-            showNoInternetDailog();
+            errorMessageforInternetConnectivity();
+
         }
     }
     // getting location
@@ -161,8 +135,8 @@ public class SplashScreen extends AppCompatActivity implements LocationListener,
                     // close this activity
                     finish();
 
-                    System.out.println("lat == "+locationLatitude);
-                    System.out.println("lon == "+locationLongitude);
+                    System.out.println("lat == "+locationLatitude); //37.421998333333335
+                    System.out.println("lon == "+locationLongitude);//-122.08400000000002
                 }
             } finally {
 
@@ -170,7 +144,25 @@ public class SplashScreen extends AppCompatActivity implements LocationListener,
             }
         }
     };
-
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                           int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case 1: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(SplashScreen.this,
+                            Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                        Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+                return;
+            }
+        }
+    }
 
 
 
@@ -224,68 +216,7 @@ public class SplashScreen extends AppCompatActivity implements LocationListener,
         }
         return haveConnectedWifi || haveConnectedMobile;
     }
-    private void showNoInternetDailog(){
-        dailog = new AlertDialog.Builder(SplashScreen.this);
-        dailog.setMessage("No internet connection!");
-        dailog.setPositiveButton( "OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                finish();
-                dialog.dismiss();
-            }
-        });
-        AlertDialog alert = dailog.create();
-        alert.show();
-    }
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case PERMISSION_REQUEST_CODE:
-                if (grantResults.length > 0) {
 
-                    boolean locationAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-
-
-                    if (locationAccepted)
-                        Toast.makeText(getApplicationContext(),  "Permission Granted, Now you can access location data.", Toast.LENGTH_LONG).show();
-                    else {
-
-                        Toast.makeText(getApplicationContext(), "Permission Denied, You cannot access location data.", Toast.LENGTH_LONG).show();
-
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            if (shouldShowRequestPermissionRationale(ACCESS_FINE_LOCATION)) {
-                                showMessageOKCancel("You need to allow access to both the permissions",
-                                        new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                                    requestPermissions(new String[]{ACCESS_FINE_LOCATION},
-                                                            PERMISSION_REQUEST_CODE);
-                                                }
-                                            }
-                                        });
-                                return;
-                            }
-                        }
-
-                    }
-                }
-
-
-                break;
-        }
-    }
-    //check dangerous(location) permission at runtime
-  public boolean checkPermission(){
-      int result = ContextCompat.checkSelfPermission(getApplicationContext(), ACCESS_FINE_LOCATION);
-
-      return result == PackageManager.PERMISSION_GRANTED;
-  }
-    //request dangerous(location) permission at runtime
-  public void requestPermission(){
-      ActivityCompat.requestPermissions(this, new String[]{ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_CODE);
-  }
 
     private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
         new AlertDialog.Builder(context)
@@ -313,5 +244,11 @@ public class SplashScreen extends AppCompatActivity implements LocationListener,
                 openSettingsFromDevice();
                 break;
         }
+    }
+
+    private void errorMessageforInternetConnectivity(){
+        splashScreenBinding.titleTextview.setVisibility(View.VISIBLE);
+        splashScreenBinding.bodyTextview.setVisibility(View.VISIBLE);
+        splashScreenBinding.settingsButton.setVisibility(View.VISIBLE);
     }
 }
