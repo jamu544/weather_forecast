@@ -87,7 +87,10 @@ public class FiveDayWeatherForecastAdapter extends RecyclerView.Adapter<FiveDayW
 
     @Override
     public int getItemCount() {
+        if(weatherForecastResult.list != null)
         return weatherForecastResult.list.size();
+        else
+            return 0;
     }
 
     public class WeatherForecastHolder extends RecyclerView.ViewHolder {

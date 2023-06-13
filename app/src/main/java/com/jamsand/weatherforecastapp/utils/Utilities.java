@@ -93,11 +93,11 @@ public class Utilities {
     }
     public static String convertUnixToTime(String inputDate) throws ParseException {
         Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(inputDate);
-        return new SimpleDateFormat("HH:mm:ss").format(date);
+        return new SimpleDateFormat("HH:mm").format(date);
     }
 
     // try this time {
-    private boolean checktimings(String time, String endtime) {
+    public static boolean checktimings(String time, String endtime) {
 
         String pattern = "HH:mm";
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
@@ -106,7 +106,7 @@ public class Utilities {
             Date date1 = sdf.parse(time);
             Date date2 = sdf.parse(endtime);
 
-            if(date1.before(date2)) {
+            if(date1.after(date2)) {
                 return true;
             } else {
 
@@ -117,4 +117,33 @@ public class Utilities {
         }
         return false;
     }
+
+    public static int compareTime(String inputDate, String endtime) {
+
+
+
+        String pattern = "HH:mm";
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+
+
+
+        try {
+       //     Date formatDateFromServer = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(inputDate);
+
+            Date date1 = sdf.parse(inputDate);
+            Date date2 = sdf.parse(endtime);
+
+            // Outputs -1 as date1 is before date2
+            if(date2.compareTo(date1) == 0){
+                System.out.println("Good time");
+                return 0;
+            }
+           } catch (ParseException e){
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+
+
 }

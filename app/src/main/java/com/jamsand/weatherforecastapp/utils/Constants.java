@@ -8,7 +8,7 @@ public class Constants {
 
     public static String LATITUDE = "latitude";
     public static String LONGITUDE = "longitude";
-    public static String AFTERNOON_TIME ="12:00:00";
-    public static String TESTING_TIME ="2023-06-10 12:00:00";
+    public static String AFTERNOON_TIME ="15:00";
+
 
 }
