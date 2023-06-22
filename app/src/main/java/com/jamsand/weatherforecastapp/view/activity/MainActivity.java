@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private FiveDayWeatherForecastAdapter adapter;
-    private ArrayList<WeatherForecastResult> weatherForecastResultArrayList = new ArrayList<>();
     private WeatherConditionViewModel weatherViewModel;
 
 
@@ -110,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
         weatherViewModel.getWeatherListLiveData().observe( this, weatherForecastResult -> {
             if ( weatherForecastResult != null && weatherForecastResult.list != null && !weatherForecastResult.list.isEmpty()){
                 WeatherForecastResult forecastResult = weatherForecastResult;
-                weatherForecastResultArrayList.add(forecastResult);
                 adapter = new FiveDayWeatherForecastAdapter(forecastResult,context);
                 recyclerView = findViewById(R.id.recycler_forecast);
                 recyclerView.setHasFixedSize(true);
