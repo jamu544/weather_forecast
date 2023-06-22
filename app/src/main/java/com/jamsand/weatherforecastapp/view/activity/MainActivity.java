@@ -3,6 +3,9 @@ package com.jamsand.weatherforecastapp.view.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -17,10 +20,13 @@ import com.bumptech.glide.Glide;
 import com.jamsand.weatherforecastapp.R;
 import com.jamsand.weatherforecastapp.adapters.FiveDayWeatherForecastAdapter;
 import com.jamsand.weatherforecastapp.databinding.ActivityMainBinding;
+import com.jamsand.weatherforecastapp.model.WeatherData;
 import com.jamsand.weatherforecastapp.model.WeatherForecastResult;
 import com.jamsand.weatherforecastapp.model.WeatherResponse;
 import com.jamsand.weatherforecastapp.network.APIInterface;
 import com.jamsand.weatherforecastapp.utils.Constants;
+import com.jamsand.weatherforecastapp.viewmodel.WeatherConditionViewModel;
+import com.jamsand.weatherforecastapp.viewmodel.WeatherViewModel;
 
 import java.util.ArrayList;
 
@@ -33,30 +39,32 @@ public class MainActivity extends AppCompatActivity {
     public static final String  TAG = "MainActivity";
     String unit = "metric";
 
-    private ActivityMainBinding activityMainBinding;
+   private ActivityMainBinding activityMainBinding;
 
     //testing 5day weather (try uniits
     private String fiveDay = "https://api.openweathermap.org/data/2.5/forecast?q=mumbai&APPID=482cf2ce25f8841f70e5c870e59183a6";
     private String city = "mumbai";
 
 
+    private RecyclerView recyclerView;
+    private FiveDayWeatherForecastAdapter adapter;
+    private ArrayList<WeatherForecastResult> weatherForecastResultArrayList = new ArrayList<>();
+    private WeatherConditionViewModel weatherViewModel;
 
 
-    @Override
+      @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-       activityMainBinding = DataBindingUtil.setContentView(this,R.layout.activity_main);
-
-        context = this;
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             latitude = extras.getString(Constants.LATITUDE );
             longitude = extras.getString( Constants.LONGITUDE );
         }
+        init();
         getWeatherConditionsForCurrentLocation();
-        getWeatherForecast();
+        getWeatherForecastLiveData();
+
     }
 
     // get response from the server
@@ -92,38 +100,27 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    // test the new written Retrofit client from youtube.
+    private void init(){
+        context = this;
+        activityMainBinding = DataBindingUtil.setContentView(this,R.layout.activity_main);
+        weatherViewModel = new ViewModelProvider(this).get(WeatherConditionViewModel.class);
+    }
 
-    private void getWeatherForecast(){
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        APIInterface client = retrofit.create(APIInterface.class);
-        Call<WeatherForecastResult> call = client.getWeatherForecast(latitude, longitude, Constants.API_KEY);
-        call.enqueue(new Callback<WeatherForecastResult>() {
-            @Override
-            public void onResponse(Call<WeatherForecastResult> call, Response<WeatherForecastResult> response) {
-
-                WeatherForecastResult weatherResponse = response.body();
-                displayForecastWeather(weatherResponse);
-
-           }
-
-            @Override
-            public void onFailure(Call<WeatherForecastResult> call, Throwable t) {
-                Log.e("Error",call.toString()+"   ?????");
+    private void getWeatherForecastLiveData(){
+        weatherViewModel.getWeatherListLiveData().observe( this, weatherForecastResult -> {
+            if ( weatherForecastResult != null && weatherForecastResult.list != null && !weatherForecastResult.list.isEmpty()){
+                WeatherForecastResult forecastResult = weatherForecastResult;
+                weatherForecastResultArrayList.add(forecastResult);
+                adapter = new FiveDayWeatherForecastAdapter(forecastResult,context);
+                recyclerView = findViewById(R.id.recycler_forecast);
+                recyclerView.setHasFixedSize(true);
+                LinearLayoutManager llm = new LinearLayoutManager(this);
+                llm.setOrientation(LinearLayoutManager.VERTICAL);
+                recyclerView.setLayoutManager(llm);
+                recyclerView.setAdapter(adapter);
 
 
             }
         });
     }
-
-    private void displayForecastWeather(WeatherForecastResult weatherForecastResult){
-        FiveDayWeatherForecastAdapter adapter = new FiveDayWeatherForecastAdapter(weatherForecastResult,context);
-        activityMainBinding.setMyAdapter(adapter);
-    }
-
 }

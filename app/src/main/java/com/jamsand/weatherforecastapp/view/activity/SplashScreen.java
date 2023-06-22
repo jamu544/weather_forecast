@@ -130,6 +130,7 @@ public class SplashScreen extends AppCompatActivity implements LocationListener,
 
                     i.putExtra(Constants.LATITUDE, locationLatitude);
                     i.putExtra(Constants.LONGITUDE, locationLongitude);
+
                     startActivity(i);
 
                     // close this activity

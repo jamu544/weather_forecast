@@ -2,9 +2,11 @@ package com.jamsand.weatherforecastapp.repository;
 
 import android.util.Log;
 
+import com.jamsand.weatherforecastapp.model.WeatherForecastResult;
 import com.jamsand.weatherforecastapp.model.WeatherResponse;
 import com.jamsand.weatherforecastapp.network.APIClient;
 import com.jamsand.weatherforecastapp.network.APIInterface;
+import com.jamsand.weatherforecastapp.utils.Constants;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -20,25 +22,51 @@ public class WeatherRepository {
     public WeatherRepository (){
         apiInterface = APIClient.getRetrofitInstance().create(APIInterface.class);
     }
-    public LiveData<WeatherResponse> getRepositoryOfWeatherConditions(String lat,String lon,String apiKey){
-        final MutableLiveData<WeatherResponse> data = new MutableLiveData<>();
-        apiInterface.getCurrentWeatherData( lat,lon,apiKey).enqueue(new Callback<WeatherResponse>() {
-            @Override
-            public void onResponse(Call<WeatherResponse> call, Response<WeatherResponse> response) {
-                Log.d(TAG, "onResponse response:: " + response);
-                if (response.body() != null) {
-                    data.setValue(response.body());
+    //this method is a template
+//    public LiveData<WeatherResponse> getRepositoryOfWeatherConditions(String lat,String lon,String apiKey){
+//        final MutableLiveData<WeatherResponse> data = new MutableLiveData<>();
+//        apiInterface.getCurrentWeatherData( lat,lon,apiKey).enqueue(new Callback<WeatherResponse>() {
+//            @Override
+//            public void onResponse(Call<WeatherResponse> call, Response<WeatherResponse> response) {
+//                Log.d(TAG, "onResponse response:: " + response);
+//                if (response.body() != null) {
+//                    data.setValue(response.body());
+//
+//                    Log.d(TAG, "weather datails:: " + response.body());
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<WeatherResponse> call, Throwable t) {
+//
+//            }
+//        });
+//
+//        return data;
+//    }
 
-                    Log.d(TAG, "weather datails:: " + response.body());
+    public LiveData<WeatherForecastResult> getRepositoryForWeatherForcast(String lat,String lon, String appID){
 
-                }
-            }
+        final MutableLiveData<WeatherForecastResult> data = new MutableLiveData<>();
+        apiInterface.getWeatherForecast(Constants.LATITUDE2, Constants.LONGITUDE2, Constants.API_KEY)
+                .enqueue(new Callback<WeatherForecastResult>() {
+                    @Override
+                    public void onResponse(Call<WeatherForecastResult> call, Response<WeatherForecastResult> response) {
+                        Log.d(TAG, "onResponse weather::_____> " + response);
+                        if (response.body() != null) {
+                            data.setValue(response.body());
+                            Log.d(TAG, "weather five day:: " + response.body());
+                            Log.d(TAG, "size:: :" + response.body().list.size());
+                        }
 
-            @Override
-            public void onFailure(Call<WeatherResponse> call, Throwable t) {
+                    }
 
-            }
-        });
+                    @Override
+                    public void onFailure(Call<WeatherForecastResult> call, Throwable t) {
+                                data.setValue(null);
+                    }
+                });
 
         return data;
     }

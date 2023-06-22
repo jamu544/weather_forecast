@@ -10,5 +10,10 @@ public class Constants {
     public static String LONGITUDE = "longitude";
     public static String AFTERNOON_TIME ="15:00";
 
+    public static String LATITUDE2 = "-33.153648";
+    public static String LONGITUDE2 = "27.525789";
+
+
+
 
 }
