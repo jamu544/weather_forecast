@@ -19,13 +19,4 @@ public interface APIInterface {
             @Query("lon") String lon,
             @Query("APPID") String app_id
             );
-//    @GET("data/2.5/onecall?")
-//    Call<WeatherForecastResult> getWeatherForecast(
-//            @Query("q") String cityName,
-//            @Query("APPID") String app_id
-//    );
-    //rename widget ids with underscores
-    //To limit number of timestamps in the API response please setup cnt.
-    //https://api.openweathermap.org/data/2.5/forecast?lat=57&lon=-2.15&cnt=3&appid={API key}
-
 }
