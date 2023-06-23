@@ -8,12 +8,11 @@
 ###  The task
 This application will show the weather conditions based on the users current GPS location and
  five-day weather forecast.
-# Weather API :
-
+ 
+### Weather API :
 - http://openweathermap.org/
 
 - ### :hammer_and_wrench: Languages and Tools :
-
 - Java
 - MVVM
 - Solid Principles
