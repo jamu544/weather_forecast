@@ -8,4 +8,8 @@
 ###  The task
 This application will show the weather conditions based on the users current GPS location and
  five-day weather forecast.
+# Weather API :
+
+- http://openweathermap.org/
+
 
