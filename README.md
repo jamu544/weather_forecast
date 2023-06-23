@@ -1,5 +1,11 @@
-# weather_forecast app
+# weather_forecast 
 
 <div id="header" align="center">
   <img src="https://media.giphy.com/media/M9gbBd9nbDrOTu1Mqx/giphy.gif" width="100"/>
 </div>
+### 👨‍🦲 About Weatherfocast App :
+
+###  The task
+This application will show the weather conditions based on the users current GPS location and
+ five-day weather forecast.
+
