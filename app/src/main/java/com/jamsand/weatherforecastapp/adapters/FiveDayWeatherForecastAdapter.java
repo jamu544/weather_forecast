@@ -47,17 +47,23 @@ public class FiveDayWeatherForecastAdapter extends RecyclerView.Adapter<FiveDayW
     public void onBindViewHolder(@NonNull WeatherForecastHolder holder, int position) {
         WeatherForecastResult weatherForecast = weatherForecastResult;
 
+
+
+        //if () {
             holder.weatherforecastItemsBinding.txtDate.setText(
                     Utilities.convertUnixToDate(weatherForecast.list.get(position).dt));
             holder.weatherforecastItemsBinding.txtDescription.setText(
-                    weatherForecast.list.get(position).weather.get(0).description);
+                    weatherForecast.list.get(position).weather.get(0).description +"  "+
+                            Math.round((weatherForecast.list.get(position).main.temp_max - 275.15)) + "\u00B0"+"/" +
+                            Math.round((weatherForecast.list.get(position).main.temp_min - 275.15)));
 
 
             Glide.with(context).load("http://openweathermap.org/img/w/" +
                             weatherForecast.list.get(position).weather.get(0).icon + ".png")
                     .into(holder.weatherforecastItemsBinding.weatherThumbnail);
 
-        holder.bind(weatherForecast);
+            holder.bind(weatherForecast);
+     //   }
 
     }
 
