@@ -12,4 +12,14 @@ This application will show the weather conditions based on the users current GPS
 
 - http://openweathermap.org/
 
+- ### :hammer_and_wrench: Languages and Tools :
+
+- Java
+- MVVM
+- Solid Principles
+- Retrofit
+- Glide 
+- Databinding
+- Livedata
+
 
