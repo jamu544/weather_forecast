@@ -23,8 +23,11 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import static com.jamsand.weatherforecastapp.utils.Constants.AFTERNOON_TIME;
+
 public class FiveDayWeatherForecastAdapter extends RecyclerView.Adapter<FiveDayWeatherForecastAdapter.WeatherForecastHolder> {
     public Context context;
+    public int adapterPosistion;
 
     WeatherForecastResult weatherForecastResult;
     public FiveDayWeatherForecastAdapter(WeatherForecastResult weatherList, @NonNull Context context) {
@@ -50,7 +53,10 @@ public class FiveDayWeatherForecastAdapter extends RecyclerView.Adapter<FiveDayW
 
         try {
          //   System.out.println("COmpare time and time again===  "+Utilities.checktimings(Utilities.convertUnixToTime(weatherForecast.list.get(position).dt_txt), "15:00"));
-       if (Utilities.checktimings(Utilities.convertUnixToTime(weatherForecast.list.get(position).dt_txt), "15:00")){
+       if (Utilities.checktimings(Utilities.convertUnixToTime(weatherForecast.list.get(position).dt_txt), AFTERNOON_TIME)){
+           holder.weatherforecastItemsBinding.txtDate.setVisibility(View.VISIBLE);
+           holder.weatherforecastItemsBinding.txtDescription.setVisibility(View.VISIBLE);
+           holder.weatherforecastItemsBinding.weatherThumbnail.setVisibility(View.VISIBLE);
            holder.weatherforecastItemsBinding.txtDate.setText(
                    Utilities.convertUnixToDate(weatherForecast.list.get(position).dt));
            holder.weatherforecastItemsBinding.txtDescription.setText(
@@ -63,19 +69,20 @@ public class FiveDayWeatherForecastAdapter extends RecyclerView.Adapter<FiveDayW
                            weatherForecast.list.get(position).weather.get(0).icon + ".png")
                    .into(holder.weatherforecastItemsBinding.weatherThumbnail);
 
-
+           holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
        }
        else {
            holder.weatherforecastItemsBinding.txtDate.setVisibility(View.GONE);
            holder.weatherforecastItemsBinding.txtDescription.setVisibility(View.GONE);
            holder.weatherforecastItemsBinding.weatherThumbnail.setVisibility(View.GONE);
-
+           holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
        }
+            holder.bind(weatherForecast);
 
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
-        holder.bind(weatherForecast);
+
         //if () {
 
      //   }
@@ -92,13 +99,21 @@ public class FiveDayWeatherForecastAdapter extends RecyclerView.Adapter<FiveDayW
             }
 
     }
-//    public void filterWeatherList(WeatherForecastResult filterlist) {
-//        // below line is to add our filtered
-//        // list in our course array list.
-//        weatherForecastResult = filterlist;
-//        notifyDataSetChanged();
-//
-//    }
+    public void filterWeatherList(WeatherForecastResult filterlist) {
+        // below line is to add our filtered
+        // list in our course array list.
+        weatherForecastResult = filterlist;
+        try {
+            if (Utilities.checktimings(Utilities.convertUnixToTime(weatherForecastResult.list.get(adapterPosistion).dt_txt), AFTERNOON_TIME)) {
+
+
+                notifyDataSetChanged();
+            }
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 
     public static class WeatherForecastHolder extends RecyclerView.ViewHolder {
         public WeatherforecastItemsBinding weatherforecastItemsBinding;
