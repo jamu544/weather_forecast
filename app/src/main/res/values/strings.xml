@@ -6,4 +6,5 @@
     <string name="_5_dayforecast">5-DAYFORECAST</string>
     <string name="partly_cloudly">Partly Cloudly</string>
     <string name="today">Today</string>
+    <string name="blank">\"  \"</string>
 </resources>

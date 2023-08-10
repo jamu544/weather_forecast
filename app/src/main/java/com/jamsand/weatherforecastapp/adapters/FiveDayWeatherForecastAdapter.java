@@ -59,10 +59,14 @@ public class FiveDayWeatherForecastAdapter extends RecyclerView.Adapter<FiveDayW
            holder.weatherforecastItemsBinding.weatherThumbnail.setVisibility(View.VISIBLE);
            holder.weatherforecastItemsBinding.txtDate.setText(
                    Utilities.convertUnixToDate(weatherForecast.list.get(position).dt));
-           holder.weatherforecastItemsBinding.txtDescription.setText(
-                   weatherForecast.list.get(position).weather.get(0).description +"  "+
-                           Math.round((weatherForecast.list.get(position).main.temp_max - 275.15)) + "\u00B0"+"/" +
-                           Math.round((weatherForecast.list.get(position).main.temp_min - 275.15))+ "\u00B0");
+
+           String description = new StringBuilder().append(weatherForecast.list.get(position).weather.get(0).description)
+                   .append(context.getString(R.string.blank)).append(Math.round((weatherForecast.list.get(position)
+                           .main.temp_max - 275.15))).append("\u00B0").append("/").
+                   append(Math.round((weatherForecast.list.get(position).main.temp_min - 275.15)))
+                   .append("\u00B0").toString();
+
+           holder.weatherforecastItemsBinding.txtDescription.setText(description);
 
 
            Glide.with(context).load("http://openweathermap.org/img/w/" +

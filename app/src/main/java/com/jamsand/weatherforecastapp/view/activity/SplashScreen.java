@@ -145,7 +145,7 @@ public class SplashScreen extends AppCompatActivity implements LocationListener,
             }
         }
     };
-    @Override
+    @Override // test location and internet connections
     public void onRequestPermissionsResult(int requestCode, String[] permissions,
                                            int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -155,10 +155,11 @@ public class SplashScreen extends AppCompatActivity implements LocationListener,
                     if (ContextCompat.checkSelfPermission(SplashScreen.this,
                             Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                         Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
+
                     }
                 } else {
                     Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
-                    finish();
+                    
                 }
                 return;
             }
