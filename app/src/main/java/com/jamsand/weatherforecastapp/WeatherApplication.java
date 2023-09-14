@@ -9,9 +9,11 @@ public class WeatherApplication  extends Application {
     private WeatherApplication(){}
 
     public static synchronized WeatherApplication getInstance(){
-        if (appContext == null)
-            appContext = new WeatherApplication();
+        if (appContext != null) {
             return appContext;
+        }
+        appContext = new WeatherApplication();
+        return appContext;
     }
 
 }

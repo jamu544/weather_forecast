@@ -25,10 +25,15 @@ import com.jamsand.weatherforecastapp.model.WeatherForecastResult;
 import com.jamsand.weatherforecastapp.model.WeatherResponse;
 import com.jamsand.weatherforecastapp.network.APIInterface;
 import com.jamsand.weatherforecastapp.utils.Constants;
+import com.jamsand.weatherforecastapp.utils.Utilities;
 import com.jamsand.weatherforecastapp.viewmodel.WeatherConditionViewModel;
 import com.jamsand.weatherforecastapp.viewmodel.WeatherViewModel;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
+
+import static com.jamsand.weatherforecastapp.utils.Constants.AFTERNOON_TIME;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,7 +56,9 @@ public class MainActivity extends AppCompatActivity {
     private WeatherConditionViewModel weatherViewModel;
 
 
-      @Override
+    ArrayList<WeatherForecastResult.MyWeatherForecastList> weatherForecastListList = new ArrayList<>();
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -107,9 +114,26 @@ public class MainActivity extends AppCompatActivity {
 
     private void getWeatherForecastLiveData(){
         weatherViewModel.getWeatherListLiveData().observe( this, weatherForecastResult -> {
-            if ( weatherForecastResult != null && weatherForecastResult.list != null && !weatherForecastResult.list.isEmpty()){
-                WeatherForecastResult forecastResult = weatherForecastResult;
-                adapter = new FiveDayWeatherForecastAdapter(forecastResult,context);
+            if ( weatherForecastResult != null &&
+                weatherForecastResult.list != null &&
+                !weatherForecastResult.list.isEmpty()){
+
+             //   WeatherForecastResult forecastResult = weatherForecastResult;
+
+                ArrayList<WeatherForecastResult.MyWeatherForecastList> myWeatherForecastListList = weatherForecastResult.list ;
+                weatherForecastListList.addAll(myWeatherForecastListList);
+
+                // next try --> filtering code goes here
+
+                for(WeatherForecastResult.MyWeatherForecastList c : weatherForecastResult.list){
+                    try {
+                        if (Utilities.convertUnixToTime(c.dt_txt).equals(AFTERNOON_TIME))
+                        System.out.println("Days of the week =>> "+ Utilities.convertUnixToDate(c.dt));
+                    } catch (ParseException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                adapter = new FiveDayWeatherForecastAdapter(weatherForecastListList,context);
                 recyclerView = findViewById(R.id.recycler_forecast);
                 recyclerView.setHasFixedSize(true);
                 LinearLayoutManager llm = new LinearLayoutManager(this);

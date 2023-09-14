@@ -2,7 +2,7 @@ package com.jamsand.weatherforecastapp.model;
 
 import java.util.ArrayList;
 
-public class MyList {
+public class MyWeatherForecastList {
     public int dt;
     public Main main;
     public ArrayList<Weather> weather;
@@ -13,4 +13,7 @@ public class MyList {
     public Sys sys;
     public String dt_txt;
     public Rain rain;
+
+
+
 }

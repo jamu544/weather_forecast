@@ -131,6 +131,10 @@ public class SplashScreen extends AppCompatActivity implements LocationListener,
                     i.putExtra(Constants.LATITUDE, locationLatitude);
                     i.putExtra(Constants.LONGITUDE, locationLongitude);
 
+
+
+
+
                     startActivity(i);
 
                     // close this activity
@@ -138,6 +142,9 @@ public class SplashScreen extends AppCompatActivity implements LocationListener,
 
                     System.out.println("lat == "+locationLatitude); //37.421998333333335
                     System.out.println("lon == "+locationLongitude);//-122.08400000000002
+
+                    Constants.LATITUDE2 = locationLatitude;
+                    Constants.LONGITUDE2 = locationLongitude;
                 }
             } finally {
 
