@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
     private String fiveDay = "https://api.openweathermap.org/data/2.5/forecast?q=mumbai&APPID=482cf2ce25f8841f70e5c870e59183a6";
     private String city = "mumbai";
 
-
     private RecyclerView recyclerView;
     private FiveDayWeatherForecastAdapter adapter;
     private WeatherConditionViewModel weatherViewModel;
@@ -118,17 +117,19 @@ public class MainActivity extends AppCompatActivity {
                 weatherForecastResult.list != null &&
                 !weatherForecastResult.list.isEmpty()){
 
-             //   WeatherForecastResult forecastResult = weatherForecastResult;
-
                 ArrayList<WeatherForecastResult.MyWeatherForecastList> myWeatherForecastListList = weatherForecastResult.list ;
-                weatherForecastListList.addAll(myWeatherForecastListList);
+            //    weatherForecastListList.addAll(myWeatherForecastListList);
 
                 // next try --> filtering code goes here
 
                 for(WeatherForecastResult.MyWeatherForecastList c : weatherForecastResult.list){
                     try {
-                        if (Utilities.convertUnixToTime(c.dt_txt).equals(AFTERNOON_TIME))
-                        System.out.println("Days of the week =>> "+ Utilities.convertUnixToDate(c.dt));
+                        if (Utilities.convertUnixToTime(c.dt_txt).equals(AFTERNOON_TIME)) {
+                            System.out.println("Days of the week =>> " + Utilities.convertUnixToDate(c.dt));
+                            weatherForecastListList.add(c);
+                        //
+                        }
+
                     } catch (ParseException e) {
                         throw new RuntimeException(e);
                     }
@@ -140,7 +141,6 @@ public class MainActivity extends AppCompatActivity {
                 llm.setOrientation(LinearLayoutManager.VERTICAL);
                 recyclerView.setLayoutManager(llm);
                 recyclerView.setAdapter(adapter);
-
 
             }
         });
