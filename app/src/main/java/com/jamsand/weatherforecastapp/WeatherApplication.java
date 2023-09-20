@@ -4,16 +4,19 @@ import android.app.Application;
 
 public class WeatherApplication  extends Application {
 
-    private static WeatherApplication appContext;
+    public static WeatherApplication appContext;
 
-    private WeatherApplication(){}
+    public WeatherApplication(){}
 
-    public static synchronized WeatherApplication getInstance(){
-        if (appContext != null) {
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        appContext = this;
+    }
+
+    public static  WeatherApplication getInstance(){
+
             return appContext;
-        }
-        appContext = new WeatherApplication();
-        return appContext;
     }
 
 }

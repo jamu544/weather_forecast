@@ -29,6 +29,8 @@ import com.jamsand.weatherforecastapp.R;
 import com.jamsand.weatherforecastapp.WeatherApplication;
 import com.jamsand.weatherforecastapp.databinding.ActivitySplashScreenBinding;
 import com.jamsand.weatherforecastapp.utils.Constants;
+import com.jamsand.weatherforecastapp.utils.Utilities;
+
 import android.Manifest;
 
 
@@ -68,7 +70,7 @@ public class SplashScreen extends AppCompatActivity implements LocationListener,
         settingsButton.setOnClickListener(this);
 
 
-        if(checkInternetConnectivity()) {
+        if(Utilities.checkInternetConnectivity(context)) {
             if (ContextCompat.checkSelfPermission(SplashScreen.this,
                     Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
                 if (ActivityCompat.shouldShowRequestPermissionRationale(SplashScreen.this,
@@ -210,25 +212,6 @@ public class SplashScreen extends AppCompatActivity implements LocationListener,
         alertDialog2 = null;
         stopRepeatingTask();
     }
-
-    // check internet connection for both MOBILE and WIFI
-    private boolean checkInternetConnectivity() {
-        boolean haveConnectedWifi = false;
-        boolean haveConnectedMobile = false;
-
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
-        for (NetworkInfo ni : netInfo) {
-            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
-                if (ni.isConnected())
-                    haveConnectedWifi = true;
-            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
-                if (ni.isConnected())
-                    haveConnectedMobile = true;
-        }
-        return haveConnectedWifi || haveConnectedMobile;
-    }
-
 
     private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
         new AlertDialog.Builder(context)

@@ -20,18 +20,15 @@ import com.bumptech.glide.Glide;
 import com.jamsand.weatherforecastapp.R;
 import com.jamsand.weatherforecastapp.adapters.FiveDayWeatherForecastAdapter;
 import com.jamsand.weatherforecastapp.databinding.ActivityMainBinding;
-import com.jamsand.weatherforecastapp.model.WeatherData;
 import com.jamsand.weatherforecastapp.model.WeatherForecastResult;
 import com.jamsand.weatherforecastapp.model.WeatherResponse;
 import com.jamsand.weatherforecastapp.network.APIInterface;
 import com.jamsand.weatherforecastapp.utils.Constants;
 import com.jamsand.weatherforecastapp.utils.Utilities;
 import com.jamsand.weatherforecastapp.viewmodel.WeatherConditionViewModel;
-import com.jamsand.weatherforecastapp.viewmodel.WeatherViewModel;
 
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.jamsand.weatherforecastapp.utils.Constants.AFTERNOON_TIME;
 
@@ -40,17 +37,9 @@ public class MainActivity extends AppCompatActivity {
 
     private Context context;
     String latitude, longitude;
-
     public static final String  TAG = "MainActivity";
-    String unit = "metric";
-
    private ActivityMainBinding activityMainBinding;
-
-    //testing 5day weather (try uniits
-    private String fiveDay = "https://api.openweathermap.org/data/2.5/forecast?q=mumbai&APPID=482cf2ce25f8841f70e5c870e59183a6";
-    private String city = "mumbai";
-
-    private RecyclerView recyclerView;
+     private RecyclerView recyclerView;
     private FiveDayWeatherForecastAdapter adapter;
     private WeatherConditionViewModel weatherViewModel;
 
@@ -72,8 +61,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    // get response from the server
-    //change later to use singleton
     public void getWeatherConditionsForCurrentLocation(){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
@@ -90,8 +77,8 @@ public class MainActivity extends AppCompatActivity {
 
                     String icon = weatherResponse.weather.get(0).icon;
 
-                    activityMainBinding.locationTextView.setText(weatherResponse.name+","+weatherResponse.sys.country);
-                    activityMainBinding.weatherConditionTextView.setText(weatherResponse.weather.get(0).description+"");
+                    activityMainBinding.locationTextView.setText(String.format("%s,%s", weatherResponse.name, weatherResponse.sys.country));
+                    activityMainBinding.weatherConditionTextView.setText(String.format("%s", weatherResponse.weather.get(0).description));
                     activityMainBinding.temperatureTextView.setText("" + Math.round((weatherResponse.main.temp - 275.15))+"\u00B0");
 
                     Glide.with(context).load("http://openweathermap.org/img/w/" +icon+".png").into(activityMainBinding.weatherIconImageView);
@@ -118,9 +105,6 @@ public class MainActivity extends AppCompatActivity {
                 !weatherForecastResult.list.isEmpty()){
 
                 ArrayList<WeatherForecastResult.MyWeatherForecastList> myWeatherForecastListList = weatherForecastResult.list ;
-            //    weatherForecastListList.addAll(myWeatherForecastListList);
-
-                // next try --> filtering code goes here
 
                 for(WeatherForecastResult.MyWeatherForecastList c : weatherForecastResult.list){
                     try {

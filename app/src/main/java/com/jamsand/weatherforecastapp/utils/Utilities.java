@@ -23,17 +23,18 @@ import java.util.Date;
 
 public class Utilities {
 
-  private static Context context = WeatherApplication.getInstance();
+  private static Context appContext = WeatherApplication.appContext;
 
     AlertDialog.Builder dailog;
 
 
     // check internet connection for both MOBILE and WIFI t
-    public static boolean checkInternetConnectivity() {
+    public static boolean checkInternetConnectivity(Context context) {
         boolean haveConnectedWifi = false;
         boolean haveConnectedMobile = false;
+        context = appContext;
 
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager cm = (ConnectivityManager)  context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo[] netInfo = cm.getAllNetworkInfo();
         for (NetworkInfo ni : netInfo) {
             if (ni.getTypeName().equalsIgnoreCase("WIFI"))

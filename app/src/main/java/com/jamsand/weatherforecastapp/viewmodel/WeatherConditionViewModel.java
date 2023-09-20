@@ -16,11 +16,6 @@ public class WeatherConditionViewModel extends AndroidViewModel {
 
     private WeatherRepository weatherResponse;
     private LiveData<WeatherForecastResult> weatherListLiveData;
-//    public String latitude;
-//    public String longitude;
-//    public String apiKey;
-
-
     public WeatherConditionViewModel(@NonNull Application application) {
         super(application);
         weatherResponse =new WeatherRepository();

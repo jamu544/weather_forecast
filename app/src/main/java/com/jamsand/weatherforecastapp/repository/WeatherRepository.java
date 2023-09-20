@@ -36,7 +36,6 @@ public class WeatherRepository {
                             Log.d(TAG, "weather five day:: " + response.body());
                             Log.d(TAG, "size:: :" + response.body().list.size());
                         }
-
                     }
 
                     @Override

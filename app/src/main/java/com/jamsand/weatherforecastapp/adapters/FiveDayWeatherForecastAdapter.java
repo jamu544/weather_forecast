@@ -29,9 +29,6 @@ import static com.jamsand.weatherforecastapp.utils.Constants.AFTERNOON_TIME;
 
 public class FiveDayWeatherForecastAdapter extends RecyclerView.Adapter<FiveDayWeatherForecastAdapter.WeatherForecastHolder> {
     public Context context;
-    public int adapterPosistion;
-
-    WeatherForecastResult  weatherForecastResult;
 
     List<WeatherForecastResult.MyWeatherForecastList> myWeatherForecastListList;
 
