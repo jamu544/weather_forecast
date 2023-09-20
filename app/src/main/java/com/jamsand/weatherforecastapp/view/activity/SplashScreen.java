@@ -54,6 +54,9 @@ public class SplashScreen extends AppCompatActivity implements LocationListener,
 
     public static final int PERMISSION_REQUEST_CODE = 200;
     private ActivitySplashScreenBinding splashScreenBinding;
+    public static String LATITUDE2 ;
+    public static String LONGITUDE2 ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,7 +118,7 @@ public class SplashScreen extends AppCompatActivity implements LocationListener,
 
     Runnable mStatusChecker = new Runnable() {
         @Override
-        public void run() {
+        public void run() {                                         
 
 
             try {
@@ -134,7 +137,8 @@ public class SplashScreen extends AppCompatActivity implements LocationListener,
 
 
 
-
+                    LATITUDE2 = locationLatitude;
+                    LONGITUDE2 = locationLongitude;
                     startActivity(i);
 
                     // close this activity
@@ -143,8 +147,7 @@ public class SplashScreen extends AppCompatActivity implements LocationListener,
                     System.out.println("lat == "+locationLatitude); //37.421998333333335
                     System.out.println("lon == "+locationLongitude);//-122.08400000000002
 
-                    Constants.LATITUDE2 = locationLatitude;
-                    Constants.LONGITUDE2 = locationLongitude;
+
                 }
             } finally {
 

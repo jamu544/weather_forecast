@@ -22,34 +22,11 @@ public class WeatherRepository {
     public WeatherRepository (){
         apiInterface = APIClient.getRetrofitInstance().create(APIInterface.class);
     }
-    //this method is a template
-//    public LiveData<WeatherResponse> getRepositoryOfWeatherConditions(String lat,String lon,String apiKey){
-//        final MutableLiveData<WeatherResponse> data = new MutableLiveData<>();
-//        apiInterface.getCurrentWeatherData( lat,lon,apiKey).enqueue(new Callback<WeatherResponse>() {
-//            @Override
-//            public void onResponse(Call<WeatherResponse> call, Response<WeatherResponse> response) {
-//                Log.d(TAG, "onResponse response:: " + response);
-//                if (response.body() != null) {
-//                    data.setValue(response.body());
-//
-//                    Log.d(TAG, "weather datails:: " + response.body());
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<WeatherResponse> call, Throwable t) {
-//
-//            }
-//        });
-//
-//        return data;
-//    }
 
     public LiveData<WeatherForecastResult> getRepositoryForWeatherForcast(String lat,String lon, String appID){
 
         final MutableLiveData<WeatherForecastResult> data = new MutableLiveData<>();
-        apiInterface.getWeatherForecast(Constants.LATITUDE2, Constants.LONGITUDE2, Constants.API_KEY)
+        apiInterface.getWeatherForecast(lat, lon, appID)
                 .enqueue(new Callback<WeatherForecastResult>() {
                     @Override
                     public void onResponse(Call<WeatherForecastResult> call, Response<WeatherForecastResult> response) {

@@ -5,6 +5,8 @@ import android.app.Application;
 import com.jamsand.weatherforecastapp.model.WeatherForecastResult;
 import com.jamsand.weatherforecastapp.model.WeatherResponse;
 import com.jamsand.weatherforecastapp.repository.WeatherRepository;
+import com.jamsand.weatherforecastapp.utils.Constants;
+import com.jamsand.weatherforecastapp.view.activity.SplashScreen;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -14,15 +16,15 @@ public class WeatherConditionViewModel extends AndroidViewModel {
 
     private WeatherRepository weatherResponse;
     private LiveData<WeatherForecastResult> weatherListLiveData;
-    public String latitude;
-    public String longitude;
-    public String apiKey;
+//    public String latitude;
+//    public String longitude;
+//    public String apiKey;
 
 
     public WeatherConditionViewModel(@NonNull Application application) {
         super(application);
         weatherResponse =new WeatherRepository();
-        this.weatherListLiveData = weatherResponse.getRepositoryForWeatherForcast(latitude,longitude,apiKey);
+        this.weatherListLiveData = weatherResponse.getRepositoryForWeatherForcast(SplashScreen.LATITUDE2,SplashScreen.LONGITUDE2, Constants.API_KEY);
     }
 
     public LiveData<WeatherForecastResult> getWeatherListLiveData(){
